@@ -10,6 +10,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Request as ExpressRequest } from 'express';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Role } from '@prisma/client';
 
 interface AuthenticatedRequest extends ExpressRequest {
   user: {
@@ -32,5 +35,12 @@ export class UsersController {
   @Get('me')
   getProfile(@Request() req: AuthenticatedRequest) {
     return req.user;
+  }
+
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(Role.ADMIN)
+  @Get()
+  findAll() {
+    return this.userService.findAll();
   }
 }

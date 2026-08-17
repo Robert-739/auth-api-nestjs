@@ -29,4 +29,13 @@ export class UsersService {
     const { password, ...result } = user;
     return result;
   }
+
+  async findAll() {
+    const users = await this.prisma.user.findMany();
+
+    return users.map(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ({ password: _password, refreshToken: _refreshToken, ...user }) => user,
+    );
+  }
 }
