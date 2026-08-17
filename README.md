@@ -61,6 +61,8 @@ JWT_SECRET=<chave aleatória>
 JWT_REFRESH_SECRET=<outra chave aleatória, diferente da anterior>
 ```
 
+> Nota: a porta 5433 foi usada neste ambiente por conflito com outra instância local de PostgreSQL. Ajuste para 5432 no seu `.env` e no `docker-compose.yml` caso não haja esse conflito na sua máquina.
+
 4. Suba o banco de dados
 ```bash
 docker compose up -d
